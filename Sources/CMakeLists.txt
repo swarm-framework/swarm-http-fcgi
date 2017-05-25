@@ -17,17 +17,5 @@ target_link_libraries(${PROJECT_NAME}
     swarm-http-server
 )
 
-# Add sample serveur
-add_executable(${PROJECT_NAME}-sample
-    swarm/http/fcgi/main.cxx
-)
-
-# Link library
-target_link_libraries(${PROJECT_NAME}-sample
-    ${PROJECT_NAME}
-    ${LibFCGI}
-    ${LibFCGI++}
-)
-
 # Install exec in bin directory
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

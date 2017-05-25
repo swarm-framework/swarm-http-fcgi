@@ -15,7 +15,7 @@
  *
  */
 
-#include "FCGISession.hxx"
+#include "FastCGISession.hxx"
 
 namespace swarm {
     namespace http {

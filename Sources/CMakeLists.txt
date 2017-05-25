@@ -1,7 +1,8 @@
 # Add sources files
 set (${PROJECT_NAME}_SOURCES
     swarm/http/fcgi/FastCGIServerDelegate.cxx swarm/http/fcgi/FastCGIServerDelegate.hxx
-    swarm/http/fcgi/FCGISession.cxx swarm/http/fcgi/FCGISession.hxx
+    swarm/http/fcgi/FastCGISession.cxx swarm/http/fcgi/FastCGISession.hxx
+    swarm/http/fcgi/FastCGIRequestDecoder.cxx swarm/http/fcgi/FastCGIRequestDecoder.hxx
 )
 
 # Set includes

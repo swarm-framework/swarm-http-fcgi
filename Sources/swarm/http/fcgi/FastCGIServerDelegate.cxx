@@ -17,11 +17,11 @@
 
 #include "FastCGIServerDelegate.hxx"
 
-#include "FCGISession.hxx"
+#include "FastCGISession.hxx"
+#include "FastCGIRequestDecoder.hxx"
 #include <fcgio.h>
 #include <swarm/http/server/HTTPServer.hxx>
 #include <swarm/http/message/request/HTTPRequest.hxx>
-#include <swarm/http/message/request/HTTPRequestBuilder.hxx>
 #include <swarm/http/message/response/HTTPResponse.hxx>
 #include <swarm/http/message/body/HTTPBody.hxx>
 #include <swarm/http/stream/HTTPStream.hxx>
@@ -35,8 +35,13 @@ namespace swarm {
             
             // Deocde fcgi request
             std::shared_ptr<HTTPRequest> FCGIRequest::decode() {
-                // FIXME implement lecture
-                return HTTPRequestBuilder{}.build();
+                
+                HTTPRequestBuilder builder{};
+                
+                // Read request
+                FastCGIRequestDecoder::updateBuilder(builder, fcgxRequest);
+                
+                return builder.build();
             }
             
             // Constructor

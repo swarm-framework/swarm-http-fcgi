@@ -24,6 +24,10 @@
 #include <swarm/http/message/commons/HTTPVersion.hxx>
 #include <swarm/http/message/header/HTTPHeader.hxx>
 #include <swarm/http/message/header/HTTPHeaders.hxx>
+#include <swarm/http/message/header/HTTPHeaders.hxx>
+#include <swarm/http/message/commons/HTTPParam.hxx>
+
+#define DEBUG 1
 
 namespace swarm {
     namespace http {
@@ -108,12 +112,77 @@ namespace swarm {
                 } catch (...) {
                     logger.log(cxxlog::Level::SEVERE, "Unable to get HTTP uri");
                 }
-
+                
                 try {
                     // Read method
                     builder.method(HTTPMethod::get(options_.at("REQUEST_METHOD")));
                 } catch (...) {
                     logger.log(cxxlog::Level::SEVERE, "Unable to decode HTTP method");
+                }
+                
+                try {
+                    
+                    // Find query string
+                    std::string query = options_.at("QUERY_STRING");
+                    
+                    // Read method
+                    builder.addQueryString(query);
+                    
+                    // Add query
+                    updateQueryParameters(builder, query);
+                    
+                } catch (...) {
+                    logger.log(cxxlog::Level::SEVERE, "Unable to decode HTTP method");
+                }
+                
+#if DEBUG > 0
+for (auto entry : options_) {
+    logger.log(cxxlog::Level::SEVERE, "%1%:%2%", entry.first, entry.second);
+}
+#endif
+            }
+            
+            // Read query parameters
+            void FastCGIRequestDecoder::updateQueryParameters(HTTPRequestBuilder &builder, const std::string & query) {
+                
+                std::stringstream ssKey{};
+                std::stringstream ssValue{};
+                
+                bool key = true;
+                for (auto c : query) {
+                    
+                    if (key) {
+                        if (c == '=') {
+                            key = false;
+                            continue;
+                        }
+                        if (c == '&') {
+                            key = false;
+                        } else {
+                            ssKey << c;
+                        }
+                    }
+                    
+                    if (!key) {
+                        if (c == '&') {
+                            key = true;
+                                
+                            // Add query param
+                            builder.addQueryParam(HTTPParam::fromValue(ssKey.str(), ssValue.str()));
+                            
+                            ssKey = std::stringstream{};
+                            ssValue = std::stringstream{};
+                        } else {
+                            ssValue << c;
+                        }
+                    }
+                }
+                
+                auto lastKey = ssKey.str();
+                if (!lastKey.empty()) {
+                    
+                    // Add query param
+                    builder.addQueryParam(HTTPParam::fromValue(lastKey, ssValue.str()));
                 }
             }
         }

@@ -33,6 +33,13 @@ namespace swarm {
                 /// \param builder Request builder
                 /// \param fcgxRequest FastCGI request
                 static void updateBuilder(HTTPRequestBuilder &builder, FCGX_Request& fcgxRequest);
+                
+            private:
+                
+                /// \brief Read query parameters
+                /// \param builder HTTP request builder
+                /// \param query HTTP query
+                static void updateQueryParameters(HTTPRequestBuilder &builder, const std::string & query);
             };
         }
     }

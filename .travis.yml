@@ -1,0 +1,32 @@
+language: cpp
+sudo: required
+dist: trusty
+git:
+  submodules: false
+before_install:
+  - git submodule update --init
+compiler:
+- clang
+os:
+- linux
+addons:
+  apt:
+    sources:
+      - boost-latest
+    packages:
+      - build-essential 
+      - libboost-all-dev 
+      - libfcgi-dev
+script: 
+- wget https://cmake.org/files/v3.8/cmake-3.8.1-Linux-x86_64.tar.gz
+- tar xzf cmake-3.8.1-Linux-x86_64.tar.gz
+- wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
+- tar xvfJ clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
+- mkdir build
+- cd build
+- export CC=../clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang
+- export CXX=../clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang++
+- ../cmake-3.8.1-Linux-x86_64/bin/cmake ..
+- make
+- make test
+

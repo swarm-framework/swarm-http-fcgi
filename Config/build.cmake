@@ -2,6 +2,16 @@
 # Find Curl
 find_package(CURL REQUIRED)
 
+# Find fastcgi
+find_path(LibFCGI_Include fcgio.h)
+find_library(LibFCGI NAMES fcgi)
+find_library(LibFCGI++ NAMES fcgi++)
+
+if (${LibFCGI++})
+    message(--\ FCGI\ \ \ ${LibFCGI})
+    message(--\ FCGI++\ ${LibFCGI++})
+endif()
+
 # Include sub projects
 find_dependencies(cxx-log)
 find_dependencies(swarm-commons)
@@ -25,10 +35,6 @@ add_library(swarm-http-fcgi
 #   * Release: -DSWARM_HTTP_FCGI_DEBUG=0
 #   * other: -DSWARM_HTTP_FCGI_DEBUG=0
 target_compile_definitions(swarm-http-fcgi  PUBLIC "WARM_HTTP_FCGI_DEBUG=$<CONFIG:Debug>")
-
-message("log: ${cxx-log_INCLUDE_DIR}")
-message("swarm-commons: ${cxx-commons_INCLUDE_DIR}")
-message("swarm-http-api: ${cxx-api_INCLUDE_DIR}")
 
 # Generate headers:
 include(GenerateExportHeader)
@@ -55,7 +61,11 @@ target_link_libraries(
     
     swarm-commons
     swarm-mapping
+    swarm-http-api
+    swarm-http-server
     ${CURL_LIBRARIES}
+    ${LibFCGI}
+    ${LibFCGI++}
 )
 
 set(config_install_dir "lib/cmake/${PROJECT_NAME}")

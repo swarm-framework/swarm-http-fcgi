@@ -10,3 +10,6 @@
 [submodule "Dependencies/swarm-http-server"]
         path = Dependencies/swarm-http-server
         url = https://github.com/swarm-framework/swarm-http-server.git
+[submodule "Dependencies/swarm-mapping"]
+	path = Dependencies/swarm-mapping
+	url = https://github.com/swarm-framework/swarm-mapping.git

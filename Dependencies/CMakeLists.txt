@@ -12,7 +12,7 @@ endif()
 
 if(EXISTS ${PROJECT_SOURCE_DIR}/Dependencies/swarm-commons/CMakeLists.txt)
 
-    if(NOT TARGET cxx-commons)
+    if(NOT TARGET swarm-commons)
         # Include swarm-commons
         add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/swarm-commons)
 
@@ -22,9 +22,21 @@ if(EXISTS ${PROJECT_SOURCE_DIR}/Dependencies/swarm-commons/CMakeLists.txt)
 
 endif()
 
+if(EXISTS ${PROJECT_SOURCE_DIR}/Dependencies/swarm-mapping/CMakeLists.txt)
+
+    if(NOT TARGET swarm-mapping)
+        # Include swarm-mapping
+        add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/swarm-mapping)
+
+        # Include sources
+        include_directories(${PROJECT_SOURCE_DIR}/Dependencies/swarm-mapping/Sources)
+    endif()
+
+endif()
+
 if(EXISTS ${PROJECT_SOURCE_DIR}/Dependencies/swarm-http-api/CMakeLists.txt)
 
-    if(NOT TARGET cxx-http-api)
+    if(NOT TARGET swarm-http-api)
         # Include swarm-http-api
         add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/swarm-http-api)
 
@@ -36,7 +48,7 @@ endif()
 
 if(EXISTS ${PROJECT_SOURCE_DIR}/Dependencies/swarm-http-server/CMakeLists.txt)
 
-    if(NOT TARGET cxx-http-server)
+    if(NOT TARGET swarm-http-server)
         # Include swarm-http-server
         add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/swarm-http-server)
 

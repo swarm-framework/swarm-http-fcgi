@@ -17,7 +17,7 @@
 
 #include "FastCGIRequestDecoder.hxx"
 
-#include <cxxlog/Logger.hxx>
+#include <cxx-log/Logger.hxx>
 #include <map>
 #include <memory>
 #include <sstream>

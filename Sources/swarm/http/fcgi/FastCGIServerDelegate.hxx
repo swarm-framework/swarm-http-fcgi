@@ -20,7 +20,7 @@
 
 #include <swarm/http/server/HTTPServerDelegate.hxx>
 #include <swarm/http/message/request/HTTPRequest.hxx>
-#include <cxxlog/Logger.hxx>
+#include <cxx-log/Logger.hxx>
 #include <fcgiapp.h>
 
 namespace swarm {
